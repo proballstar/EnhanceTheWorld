@@ -45,7 +45,7 @@ export default function CreateEvent() {
                     //     body: formData,
                     //     headers: headers
                     // })
-                    axios.postForm(ROUTES.CREATE_EVENT, formData)
+                    axios.post(ROUTES.CREATE_EVENT, formData)
                 } catch (err) {
                     setMessage(<div>
                         {err}

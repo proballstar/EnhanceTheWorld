@@ -22,4 +22,5 @@ export interface Event {
     name: string;
     title: string;
     uid: string;
+    desc: string;
 }
