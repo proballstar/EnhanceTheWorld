@@ -1,4 +1,4 @@
-export default function Input({name, handleChange, value}: {name: string, handleChange: any, values: any}) {
+export default function Input({name, handleChange, values: value}: {name: string, handleChange: any, values: any}) {
     return (
         <div>
             <label htmlFor={name}>
