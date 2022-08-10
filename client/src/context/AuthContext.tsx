@@ -11,6 +11,7 @@ import { auth } from '../config/firebase'
 import React from 'react'
 import axios from 'axios';
 import ROUTES from '../api/routes';
+import { UserByEmail, UserByGoogle } from './FetchContext'
 
 const AuthContext = createContext<any>({})
 
@@ -45,6 +46,7 @@ export const AuthContextProvider = ({
   const signup = async (email: string, password: string, bio: string, name: string, profile: File) => {
     try { 
       let user = await createUserWithEmailAndPassword(auth, email, password)
+      await UserByEmail(user.user.uid, bio, name, profile)
     } catch (error) {
       throw new Error(error)
     }
@@ -58,8 +60,11 @@ export const AuthContextProvider = ({
     try { 
       if (method == 'signup') {
         let bio = prompt("Please add a bio...")
+        let user = await signInWithPopup(auth, new GoogleAuthProvider())
+        await UserByGoogle(user.user.uid, bio, user.user.displayName, user.user.photoURL)
+      } else {
+        await signInWithPopup(auth, new GoogleAuthProvider())
       }
-      let user = await signInWithPopup(auth, new GoogleAuthProvider())
       
     } catch (error) {
       throw new Error(error)

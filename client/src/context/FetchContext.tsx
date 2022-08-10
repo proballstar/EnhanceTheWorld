@@ -5,25 +5,27 @@ import ROUTES from "../api/routes";
 const FetchContext = createContext({})
 
 
+export async function UserByEmail(uid: string, bio: string, name: string, profile: File) {
+    const formData = new FormData()
+    formData.append("uid", uid)
+    formData.append("bio", bio)
+    formData.append("name", name)
+    formData.append("profile", profile)
+    await axios.post(ROUTES.CREATE_USER_EMAIL, formData)
+}
+
+export async function UserByGoogle(uid: string, bio: string, name: string, profile: string) {
+    const formData = new FormData()
+    formData.append("uid", uid)
+    formData.append("bio", bio)
+    formData.append("name", name)
+    formData.append("profile", profile)
+    return axios.post(ROUTES.CREATE_USER_GOOGLE, formData)
+}
+
 export default function FetchProvider({ children }: { children: React.ReactNode }) {
   
-    async function UserByEmail(uid: string, bio: string, name: string, profile: File) {
-        const formData = new FormData()
-        formData.append("uid", uid)
-        formData.append("bio", bio)
-        formData.append("name", name)
-        formData.append("profile", profile)
-        await axios.post(ROUTES.CREATE_USER_EMAIL, formData)
-    }
-
-    async function UserByGoogle(uid: string, bio: string, name: string, profile: string) {
-        const formData = new FormData()
-        formData.append("uid", uid)
-        formData.append("bio", bio)
-        formData.append("name", name)
-        formData.append("profile", profile)
-        return axios.post(ROUTES.CREATE_USER_GOOGLE, formData)
-    }
+    
 
     async function AllEvents() {
         return await (await axios.get(ROUTES.GET_ALL_EVENTS)).data

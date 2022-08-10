@@ -1,39 +1,51 @@
 import { Form, Formik } from 'formik'
 import axios from 'axios';
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import ROUTES from '../../../src/api/routes';
 import Input from '../../../src/components/Inputs';
 import AutoComplete from 'react-google-autocomplete'
+import { useAuth } from '../../../src/context/AuthContext';
 
 export default function CreateEvent() {
 
-    const [outSideValues, setOutsideValues] = React.useState<{ longitude: number; latitude: number;  cover: null | File}>({
+    const [outSideValues, setOutsideValues] = React.useState<{ longitude: number; latitude: number;  cover: null | File, loc: any}>({
         latitude: 0,
         longitude: 0,
         cover: null,
+        loc: {}
     })
 
     const [message, setMessage] = React.useState(<></>)
+    const {user} = useAuth()
 
     return (
         <Formik
             initialValues={{
-                name: "",
                 title: "",
                 desc: "",
             }}
-            onSubmit={async ({name, title, desc}, helpers) => {
+            onSubmit={async ({title, desc}, helpers) => {
                 helpers.setSubmitting(true)
                 try {
-                    console.table({name, title, desc, ...outSideValues})
-                    // const formData = new FormData()
-                    // formData.append('latitude', String(outSideValues.latitude))
-                    // formData.append('longitude', String(outSideValues.longitude))
-                    // formData.append("name", name)
-                    // formData.append("title", title)
-                    // formData.append("desc", desc)
-                    // formData.append("cover", outSideValues.cover)
-                    // await axios.post(ROUTES.CREATE_EVENT, formData)
+                    let lat = outSideValues.loc.lat()
+                    let long = outSideValues.loc.lng()
+                    console.table({ title, desc, lat, long, ...outSideValues, "ANV": ""})
+                    const formData = new FormData()
+                    formData.append('latitude', String(lat))
+                    formData.append('longitude', String(long))
+                    formData.append("title", title)
+                    formData.append("desc", desc)
+                    formData.append("uid", user.uid)
+                    formData.append("cover", outSideValues.cover)
+                    // const headers = new Headers({
+                    //     'Content-Type': 'multipart/form-data'
+                    // })
+                    // await fetch(ROUTES.CREATE_EVENT, {
+                    //     method: "POST",
+                    //     body: formData,
+                    //     headers: headers
+                    // })
+                    axios.postForm(ROUTES.CREATE_EVENT, formData)
                 } catch (err) {
                     setMessage(<div>
                         {err}
@@ -45,11 +57,6 @@ export default function CreateEvent() {
                 return (
                     <Form onSubmit={formik.handleSubmit}>
                         <Input
-                            name='name'
-                            handleChange={formik.handleChange}
-                            values={formik.values.name}
-                        />
-                        <Input
                             name='title'
                             handleChange={formik.handleChange}
                             values={formik.values.title}
@@ -59,10 +66,10 @@ export default function CreateEvent() {
                             handleChange={formik.handleChange}
                             values={formik.values}
                         />
-                        <input type='file' onChange={e => setOutsideValues(prevVals => ({...prevVals}))} />
+                        <input type="file" onChange={(e: any) => setOutsideValues(prevVals => ({...prevVals, cover: e.target.files[0]}))} />
                         <AutoComplete
                             apiKey={'AIzaSyCM1VI80zuUcl_mZyXX24UgBFL-WljWpFM'}
-                            onPlaceSelected={place => console.log(place)}
+                            onPlaceSelected={place => setOutsideValues(val => ({...val, loc: place.geometry.location}))}
                         />
                         <button type='submit'>
                             Submit

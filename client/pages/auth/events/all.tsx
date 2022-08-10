@@ -1,16 +1,14 @@
 import React from "react";
 import axios from 'axios'
 import ROUTES from "../../../src/api/routes";
+import EventCard from "../../../src/components/EventCard";
 
 export default function ALLEvent({events}) {
     return (
-        <div>
-            {JSON.stringify(events)}
+        <div className="p-3 space-y-5">
             {events.map((values, index) => {
                 return (
-                    <div key={`event-${values}`}>
-                        {JSON.stringify(values)}
-                    </div>
+                    <EventCard key={`event-card-${index}`} {...values} />
                 )
             })}
         </div>
