@@ -68,7 +68,7 @@ export default function CreateEvent() {
                         />
                         <input type="file" onChange={(e: any) => setOutsideValues(prevVals => ({...prevVals, cover: e.target.files[0]}))} />
                         <AutoComplete
-                            apiKey={'AIzaSyCM1VI80zuUcl_mZyXX24UgBFL-WljWpFM'}
+                            apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID}
                             onPlaceSelected={place => setOutsideValues(val => ({...val, loc: place.geometry.location}))}
                         />
                         <button type='submit'>
