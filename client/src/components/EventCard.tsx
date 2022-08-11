@@ -3,7 +3,6 @@ import Img from 'next/image'
 import axios from 'axios'
 import { useAuth } from '../context/AuthContext';
 import ROUTES from '../api/routes';
-import {  } from 'react-moralis'
 import Link from 'next/link';
 
 export default function EventCard(props: Event) {
