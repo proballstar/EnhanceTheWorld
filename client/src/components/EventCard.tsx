@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useAuth } from '../context/AuthContext';
 import ROUTES from '../api/routes';
 import {  } from 'react-moralis'
+import Link from 'next/link';
 
 export default function EventCard(props: Event) {
 
@@ -30,7 +31,8 @@ export default function EventCard(props: Event) {
     }
 
     return (
-        <div className="max-w-sm rounded-lg overflow-hidden shadow-xl">
+        <Link href={`/auth/events/spec/${props.eid}`}>
+            <div className="max-w-sm rounded-lg overflow-hidden shadow-xl">
             <img className="w-full" src={props.cover} alt="Sunset in the mountains" />
             <div className="px-6 py-4">
                 <div className="font-bold text-xl mb-2">{props.title}</div>
@@ -46,7 +48,8 @@ export default function EventCard(props: Event) {
                 <span onClick={handleLike} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
                     Like {props.title}
                 </span>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }

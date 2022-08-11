@@ -6,8 +6,10 @@ import { AuthContextProvider } from '../src/context/AuthContext'
 import { useRouter } from 'next/router'
 import ProtectedRoute from '../src/components/ProtectedRoute'
 import { useAuth } from '../src/context/AuthContext';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import UnProtectedRoute from '../src/components/UnProtectedRoute'
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const noAuthRequired = ['/', '/login', '/signup']
 
@@ -21,16 +23,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <AuthContextProvider>
-      <Navbar />
-      {noAuthRequired.includes(router.pathname) ? (
-        <UnProtectedRoute>
-          <Component {...pageProps} />
-        </UnProtectedRoute>
-      ) : (
-        <ProtectedRoute>
-          <Component {...pageProps} />
-        </ProtectedRoute>
-      )}
+      <QueryClientProvider client={new QueryClient()}>
+        <Navbar />
+        {noAuthRequired.includes(router.pathname) ? (
+          <UnProtectedRoute>
+            <Component {...pageProps} />
+          </UnProtectedRoute>
+        ) : (
+          <ProtectedRoute>
+            <Component {...pageProps} />
+          </ProtectedRoute>
+        )}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </AuthContextProvider>
   )
 }
