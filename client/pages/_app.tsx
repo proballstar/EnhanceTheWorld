@@ -1,5 +1,4 @@
 import '../styles/globals.css'
-import { MoralisProvider } from 'react-moralis'
 import type { AppProps } from 'next/app'
 import Navbar from '../src/components/Navbar'
 import { AuthContextProvider } from '../src/context/AuthContext'
