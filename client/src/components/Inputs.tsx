@@ -4,7 +4,7 @@ export default function Input({name, handleChange, values: value}: {name: string
             <label htmlFor={name}>
                 {name.toLocaleUpperCase()}
             </label>
-            <input name={name} onChange={handleChange} value={value} />
+            <input placeholder={name} name={name} onChange={handleChange} value={value} />
         </div>
     )
 }

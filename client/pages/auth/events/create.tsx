@@ -64,7 +64,7 @@ export default function CreateEvent() {
                         <Input
                             name='desc'
                             handleChange={formik.handleChange}
-                            values={formik.values}
+                            values={formik.values.desc}
                         />
                         <input type="file" onChange={(e: any) => setOutsideValues(prevVals => ({...prevVals, cover: e.target.files[0]}))} />
                         <AutoComplete
