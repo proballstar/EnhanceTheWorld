@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-export default function LocationPin({text}) {
+export default function LocationPin({text, lat, lng}) {
     return (
         <div className="pin">
             <Icon icon="mdi:map-marker" className="pin-icon" />
