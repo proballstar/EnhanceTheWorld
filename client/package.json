@@ -10,12 +10,16 @@
     "prestart": "npm-link-shared ./node_modules/react-firebase-hooks/node_modules . react"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.1.35",
     "@headlessui/react": "^1.6.6",
+    "@iconify/react": "^3.2.2",
     "@tanstack/react-query": "^4.0.10",
     "@tanstack/react-query-devtools": "^4.0.10",
     "axios": "^0.27.2",
     "firebase": "^9.9.2",
     "formik": "^2.2.9",
+    "google-map-react": "^2.2.0",
+    "google-maps-react": "^2.0.6",
     "next": "12.2.3",
     "next-remove-imports": "^1.0.6",
     "next-transpile-modules": "^9.0.0",
