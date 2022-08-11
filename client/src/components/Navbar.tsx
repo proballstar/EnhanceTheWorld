@@ -6,17 +6,16 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
 const navigation = [
-    { name: 'Create an Event', href: '/auth/events/create', current: true },
-    { name: 'View Events', href: '/auth/events/all', current: false },
-    { name: 'View Profile', href: '/auth/user/you', current: false },
-    { name: 'View Heroes', href: '#', current: false },
+    { name: 'Create an Event', href: '/auth/events/create'},
+    { name: 'View Events', href: '/auth/events/all'},
+    { name: 'View Profile', href: '/auth/user/you'},
+    { name: 'View Heroes', href: '#'},
   ]
 
 const Unauthetnciated = [
-    { name: 'Dashboard', href: '#', current: true },
-    { name: 'Team', href: '#', current: false },
-    { name: 'Projects', href: '#', current: false },
-    { name: 'Calendar', href: '#', current: false },
+    { name: 'Home', href: '/'},
+    { name: 'Signup', href: '/signup'},
+    { name: 'Login', href: '/login'},
   ]
 
   
@@ -46,10 +45,10 @@ function ContainsUser() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          router.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'px-3 py-2 rounded-md text-sm font-medium'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={router.pathname === item.href ? 'page' : undefined}
                       >
                         {item.name}
                       </Link>
@@ -147,10 +146,10 @@ const NavbarComp = () => {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          router.pathname === item.href ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'px-3 py-2 rounded-md text-sm font-medium'
                         )}
-                        aria-current={item.current ? 'page' : undefined}
+                        aria-current={router.pathname === item.href ? 'page' : undefined}
                       >
                         {item.name}
                       </Link>
