@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
+import styles from '../../styles/LocationPin.module.css'
 
-export default function LocationPin({text, lat, lng}) {
+export default function LocationPin({lat, lng}) {
     return (
-        <div className="pin">
-            <Icon icon="mdi:map-marker" className="pin-icon" />
-            <p className="pin-text">{text}</p>
+        <div className={styles.pin}>
+            <div className={styles.pin}></div>
+            <div className={styles.pulse}></div>
         </div>
     )
 }

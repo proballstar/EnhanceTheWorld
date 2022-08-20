@@ -9,12 +9,11 @@ export default function Map({ location }) {
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID }}
         defaultCenter={location}
-        defaultZoom={10}
+        defaultZoom={15}
       >
         <LocationPin
           lat={location.lat}
           lng={location.lng}
-          text={location.address}
         />
       </GoogleMapReact>
       </div>

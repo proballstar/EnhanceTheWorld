@@ -1,10 +1,13 @@
 import React from "react";
 import axios from 'axios'
 import ROUTES from "../../../src/api/routes";
+import { Suspense } from "react";
 
 export default function ALLEvent({heroes}) {
     return (
-        <div>
+        <Suspense
+            fallback={<div>Loading...</div>}
+        >
             {JSON.stringify(heroes)}
             {heroes.map((values, index) => {
                 return (
@@ -13,16 +16,13 @@ export default function ALLEvent({heroes}) {
                     </div>
                 )
             })}
-        </div>
+        </Suspense>
     )
 }
 
 export async function getServerSideProps() {
     const heroes = await axios.get(ROUTES.ALL_HEROES)
     const data = heroes.data
-    data.push({
-        name: "HELLO HERO"
-    })
     if (heroes.status === 200) {
         return {
             props: {
