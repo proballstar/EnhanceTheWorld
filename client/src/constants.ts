@@ -1,5 +1,6 @@
 const constants = {
-    AUTH_URL: `/`
+    AUTH_URL: `/`,
+    A: "B"
 }
 
 export default constants
