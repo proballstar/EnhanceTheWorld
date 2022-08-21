@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { MoralisProvider } from 'react-moralis'
 import Navbar from '../src/components/Navbar'
 import { AuthContextProvider } from '../src/context/AuthContext'
 import { useRouter } from 'next/router'
@@ -21,21 +22,23 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [auth])
 
   return (
-    <AuthContextProvider>
-      <QueryClientProvider client={new QueryClient()}>
-        <Navbar />
-        {noAuthRequired.includes(router.pathname) ? (
-          <UnProtectedRoute>
-            <Component {...pageProps} />
-          </UnProtectedRoute>
-        ) : (
-          <ProtectedRoute>
-            <Component {...pageProps} />
-          </ProtectedRoute>
-        )}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </AuthContextProvider>
+    <MoralisProvider serverUrl={process.env["NEXT_PUBLIC_MORALIS_SERVER_URL"]} appId={process.env["NEXT_PUBLIC_MORALIS_APP_ID"]} >
+      <AuthContextProvider>
+        <QueryClientProvider client={new QueryClient()}>
+          <Navbar />
+          {noAuthRequired.includes(router.pathname) ? (
+            <UnProtectedRoute>
+              <Component {...pageProps} />
+            </UnProtectedRoute>
+          ) : (
+            <ProtectedRoute>
+              <Component {...pageProps} />
+            </ProtectedRoute>
+          )}
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </AuthContextProvider>
+    </MoralisProvider>
   )
 }
 

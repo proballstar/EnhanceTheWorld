@@ -2,6 +2,8 @@ import { useRouter, NextRouter} from 'next/router'
 import React, { ChangeEvent, useState } from 'react'
 import { useAuth } from '../src/context/AuthContext'
 import Link from 'next/link';
+import GoogleRegister from '../src/components/Signup/Google';
+import RegisterInput from '../src/components/Signup/SignupInputs';
 
 interface SignUpData {
   email: string;
@@ -9,6 +11,9 @@ interface SignUpData {
   profile: null | File[] | File;
   bio: string;
   name: string;
+  merch: string;
+  paypal: string;
+  wallet: string;
 }
 
 const Signup = () => {
@@ -20,7 +25,10 @@ const Signup = () => {
     password: '',
     profile: null,
     bio: '',
-    name: ''
+    name: '',
+    merch: "",
+    paypal: "",
+    wallet: ""
   })
   const [message, setMessage] = useState(<></>)
 
@@ -29,13 +37,9 @@ const Signup = () => {
 
     try {
       alert(JSON.stringify(data))
-      console.table(data)
-      console.log(data.profile[0].name)
       await signup(data.email, data.password, data.bio, data.name, data.profile[0])
       router.push('/auth/events/all')
     } catch (err) {
-        console.log(JSON.stringify(err))
-        console.table(err)
         setMessage(<div>
             {err.code ? err.code.split('/')[1].replace('-', ' ') : JSON.stringify(err)}
         </div>)
@@ -44,16 +48,7 @@ const Signup = () => {
     console.log(data)
   }
 
-  async function handleGoogle() {
-    try {
-      await google('signup')
-      router.push('/auth/events/all')
-    } catch (error) {
-      setMessage(<div>
-        {error.code ? error.code : JSON.stringify(error)}
-      </div>)
-    }
-  }
+  
 
   return (
     <div
@@ -64,66 +59,52 @@ const Signup = () => {
     >
       <h1 className="text-center my-3 ">Signup</h1>
       <form onSubmit={handleSignup}>
-        <div className="mb-3">
-          <label>Email address</label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            required
-            onChange={(e: any) =>
-              setData({
-                ...data,
-                email: e.target.value,
-              })
-            }
-            value={data.email}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            onChange={(e: any) =>
-              setData({
-                ...data,
-                password: e.target.value,
-              })
-            }
-            value={data.password}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Name</label>
-          <input
-            type={"text"}
-            placeholder="Text..."
-            required
-            onChange={(e: any) =>
-              setData({
-                ...data,
-                name: e.target.value,
-              })
-            }
-            value={data['name']}
-          />
-        </div>
-        <div className="mb-3">
-          <label>Bio/Description</label>
-          <textarea
-            placeholder="Bio..."
-            required
-            onChange={(e: any) =>
-              setData({
-                ...data,
-                bio: e.target.value,
-              })
-            }
-            value={data.bio}
+        <RegisterInput
+          dataval={data}
+          name={"email"}
+          placeholder={""}
+          required
+          setData={setData}
         />
-        </div>
+        <RegisterInput
+          dataval={data}
+          name={"password"}
+          placeholder={""}
+          required
+          setData={setData}
+        />
+        <RegisterInput
+          dataval={data}
+          name={"name"}
+          placeholder={""}
+          required
+          setData={setData}
+        />
+        <RegisterInput
+          dataval={data}
+          name={"bio"}
+          placeholder={""}
+          required
+          setData={setData}
+        />
+        <RegisterInput
+          dataval={data}
+          name={"merch"}
+          placeholder={""}
+          setData={setData}
+        />
+        <RegisterInput
+          dataval={data}
+          name={"paypal"}
+          placeholder={""}
+          setData={setData}
+        />
+        <RegisterInput
+          dataval={data}
+          name={"wallet"}
+          placeholder={""}
+          setData={setData}
+        />
         <div className="mb-3">
           <label>Profile</label>
           <input
@@ -142,9 +123,11 @@ const Signup = () => {
         <button className='bg-blue-400 text-white px-4 py-2 rounded-md shadow-md' type="submit">
           Signup
         </button>
-        <button onClick={() => handleGoogle()} className='bg-blue-400 text-white px-4 py-2 rounded-md shadow-md' type="submit">
-          Google
-        </button>
+        <GoogleRegister
+          google={google}
+          router={router}
+          setMessage={setMessage}
+        />
         {message}
         <div>
           <p>Already have an account?</p>

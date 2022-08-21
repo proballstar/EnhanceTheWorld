@@ -5,7 +5,7 @@ import LocationPin from "./LocationPin";
 export default function Map({ location }) {
   return (
       <div className="map w-full h-full">
-        <div className="google-map w-full h-full" style={{height: 400, width: 400}}>
+        <div className="google-map w-full h-full">
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_ID }}
         defaultCenter={location}

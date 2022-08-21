@@ -1,34 +1,30 @@
 import { QueryKey, useQuery } from "@tanstack/react-query"
-import { useRouter } from "next/router"
+import { useRouter, NextRouter } from 'next/router';
 import axios from "axios"
 import ROUTES from '../../../../src/api/routes';
 import { useRef, useState, useEffect } from 'react'
 import Map from "../../../../src/components/Map";
 import Link from 'next/link';
+import EventActions from "../../../../src/components/Events/EventActions";
 
 
 export default function SpecificEvent({event}) {
 
+    const router: NextRouter = useRouter()
+
     return (
+        <>
         <div>
             {/* Header */}
             <div>
                 <img src={event.cover} className="m-auto w-1/2 shadow-md rounded-lg opacity-80" />
             </div>
-            <p className="text-center font-bold text-3xl py-3">{event.title} by <i>{event.name}</i></p>
-            <div className="text-center font-normal text-xl" dangerouslySetInnerHTML={{ __html: event.desc }} />
-            <div className="flex m-auto justify-center space-x-6 p-3">
-                <button className="bg-blue-300 text-black font-semibold py-3 px-5 rounded-lg shadow-md">
-                    Donate
-                </button>
-                <button className="bg-green-300 text-black font-semibold py-3 px-5 rounded-lg shadow-md">
-                    Join
-                </button>
-                <button className="bg-red-300 text-black font-semibold py-3 px-5 rounded-lg shadow-md">
-                    Like
-                </button>
+            <div className="text-center font-bold text-3xl py-3">
+                {event.title} by <i onClick={() => router.push(`/auth/user/spec/${event.uid}`)}>{event.name}</i>
+                <div className="text-center font-normal text-xl" dangerouslySetInnerHTML={{ __html: event.desc }} />
+                    <EventActions crypto={event.wallet} eid={event.eid} paypal={event.paypal} methods={event.methods} />
+                </div>
             </div>
-            {/* 2 columns (md: 1 col)*/}
             <div className="grid grid-cols-2 md:grid-cols-2">
                 {/* Column 1 */}
                 <div className="col-span-1 bg-gray-300">
@@ -36,7 +32,7 @@ export default function SpecificEvent({event}) {
                         return (
                             <Link key={`person-join-${idx}`} href={`/auth/user/spec/${person.uid}`}>
                                 <div className="cursor-pointer flex">
-                                    <img src={person.profile} />
+                                    <img src={person.profile} className="w-8 h-8 x-2 rounded-full shadow-md" />
                                     <div className="text-2xl font-bold">{person.name}</div>
                                 </div>
                             </Link>
@@ -53,8 +49,8 @@ export default function SpecificEvent({event}) {
                         }}
                     />
                 </div>
-            </div>
         </div>
+        </>
     )
 }
 

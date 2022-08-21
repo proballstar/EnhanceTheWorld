@@ -5,21 +5,27 @@ import ROUTES from "../api/routes";
 const FetchContext = createContext({})
 
 
-export async function UserByEmail(uid: string, bio: string, name: string, profile: File) {
+export async function UserByEmail(uid: string, bio: string, name: string, profile: File, merch: string, paypal: string, wallet: string) {
     const formData = new FormData()
     formData.append("uid", uid)
     formData.append("bio", bio)
     formData.append("name", name)
     formData.append("profile", profile)
+    formData.append("merchandise", merch)
+    formData.append("paypal", paypal)
+    formData.append("wallet", wallet)
     await axios.post(ROUTES.CREATE_USER_EMAIL, formData)
 }
 
-export async function UserByGoogle(uid: string, bio: string, name: string, profile: string) {
+export async function UserByGoogle(uid: string, bio: string, name: string, profile: string, paypal: string, wallet: string, merch: string) {
     const formData = new FormData()
     formData.append("uid", uid)
     formData.append("bio", bio)
     formData.append("name", name)
     formData.append("profile", profile)
+    formData.append("paypal", paypal)
+    formData.append("wallet", wallet)
+    formData.append("merchandise", merch)
     return axios.post(ROUTES.CREATE_USER_GOOGLE, formData)
 }
 

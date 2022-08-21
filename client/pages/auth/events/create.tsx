@@ -22,7 +22,7 @@ export default function CreateEvent() {
         <Formik
             initialValues={{
                 title: "",
-                desc: "",
+                desc: ""
             }}
             onSubmit={async ({title, desc}, helpers) => {
                 helpers.setSubmitting(true)
