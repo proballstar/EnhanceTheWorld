@@ -10,7 +10,7 @@ interface EventActionProps {
     crypto: string;
     methods: {
         paypal?: boolean;
-        crypto?: wallet;
+        wallet?: boolean;
     }
 }
 
@@ -26,12 +26,12 @@ export default function EventActions({eid, paypal, crypto, methods}: EventAction
     async function donateCrypto() {
         let amt = prompt("How many ETH would you like to give to the Event Organizer")
         await authenticate({ signingMessage: "Sign into Enhance the World" })
-        const options = {
+        const options: any = {
             type: "native",
             amount: Moralis.Units.ETH(amt),
             receiver: crypto
         }
-        await Moralis.transfer(options)
+        await Moralis.transfer(options as any)
     }
 
     async function join() {
