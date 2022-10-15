@@ -16,11 +16,11 @@ export default function EventCard(props: Event) {
         await axios.post(ROUTES.LIKE_EVENT, formData)
     }
 
-    async function handleCryptoDonate() {
-        const amt = window.prompt("What amount do you want to donate (in ethereum; just the number)")
-        var amount = parseInt(amt)
+    //async function handleCryptoDonate() {
+    //    const amt = window.prompt("What amount do you want to donate (in ethereum; just the number)")
+     //   var amount = parseInt(amt)
 
-    }
+    //}
 
     async function handleJoin() {
         const formData = new FormData()

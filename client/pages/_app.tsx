@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [auth])
 
   return (
-    <MoralisProvider serverUrl={process.env["NEXT_PUBLIC_MORALIS_SERVER_URL"]} appId={process.env["NEXT_PUBLIC_MORALIS_APP_ID"]} >
+    // <MoralisProvider serverUrl={process.env["NEXT_PUBLIC_MORALIS_SERVER_URL"]} appId={process.env["NEXT_PUBLIC_MORALIS_APP_ID"]} >
       <AuthContextProvider>
         <QueryClientProvider client={new QueryClient()}>
           <Navbar />
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </AuthContextProvider>
-    </MoralisProvider>
+    // </MoralisProvider>
   )
 }
 

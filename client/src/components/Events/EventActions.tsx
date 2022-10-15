@@ -16,23 +16,23 @@ interface EventActionProps {
 
 export default function EventActions({eid, paypal, crypto, methods}: EventActionProps) {
     
-    const { user, Moralis, authenticate } = useMoralis()
+   // const { user, Moralis, authenticate } = useMoralis()
     const { user: FirebaseUser } = useAuth()
 
     async function donatePal() {
         window.location.href = paypal
     }
 
-    async function donateCrypto() {
-        let amt = prompt("How many ETH would you like to give to the Event Organizer")
-        await authenticate({ signingMessage: "Sign into Enhance the World" })
-        const options: any = {
-            type: "native",
-            amount: Moralis.Units.ETH(amt),
-            receiver: crypto
-        }
-        await Moralis.transfer(options as any)
-    }
+    // async function donateCrypto() {
+    //     let amt = prompt("How many ETH would you like to give to the Event Organizer")
+    //     await authenticate({ signingMessage: "Sign into Enhance the World" })
+    //     const options: any = {
+    //         type: "native",
+    //         amount: Moralis.Units.ETH(amt),
+    //         receiver: crypto
+    //     }
+    //     await Moralis.transfer(options as any)
+    // }
 
     async function join() {
         const formData = new FormData()
