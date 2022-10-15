@@ -32,12 +32,9 @@ export default function SpecificUser({ user }) {
 }
 
 export async function getServerSideProps(context) { 
-    let uuid = context.query['uuid']
-    let fetchRequest = await fetch(ROUTES.GET_USER(uuid, uuid))
-    let response = await fetchRequest.json()
     return {
         props: {
-            user: response
+            user: {}
         }
     }
 }

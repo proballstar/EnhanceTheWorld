@@ -11,9 +11,23 @@ import { auth } from '../config/firebase'
 import React from 'react'
 import axios from 'axios';
 import ROUTES from '../api/routes';
-import { UserByEmail, UserByGoogle } from './FetchContext'
+import { UserEmail, UserGoogle } from './Firebase';
 
-const AuthContext = createContext<any>({})
+interface AuthInterface {
+  user: any;
+  login: any;
+  signup: any;
+  logout: any;
+  google: any;
+}
+
+const AuthContext = createContext<AuthInterface>({
+  user: null,
+  login: null,
+  signup: null,
+  logout: null,
+  google: null,
+});
 
 export const useAuth = () => useContext(AuthContext)
 
@@ -46,7 +60,7 @@ export const AuthContextProvider = ({
   const signup = async (email: string, password: string, bio: string, name: string, profile: File, merch: string, paypal: string, wallet: string) => {
     try { 
       let user = await createUserWithEmailAndPassword(auth, email, password)
-      await UserByEmail(user.user.uid, bio, name, profile, merch, paypal, wallet)
+      await UserEmail({uid: user.user.uid, bio, name, profile, merch, paypal, wallet})
     } catch (error) {
       throw new Error(error)
     }
@@ -64,7 +78,7 @@ export const AuthContextProvider = ({
         let paypal = prompt("Please add your paypal link (optional)")
         let merch = prompt("Please add your merchandise link (optional)")
         let user = await signInWithPopup(auth, new GoogleAuthProvider())
-        await UserByGoogle(user.user.uid, bio, user.user.displayName, user.user.photoURL, paypal, wallet, merch)
+        await UserGoogle({uid: user.user.uid, bio, name: user.user.displayName, profile: user.user.photoURL, merch, paypal, wallet})
       } else {
         await signInWithPopup(auth, new GoogleAuthProvider())
       }

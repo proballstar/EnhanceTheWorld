@@ -9,7 +9,6 @@ const navigation = [
     { name: 'Create an Event', href: '/auth/events/create'},
     { name: 'View Events', href: '/auth/events/all'},
     { name: 'View Profile', href: '/auth/user/you'},
-    { name: 'View Heroes', href: '#'},
   ]
 
 const Unauthetnciated = [
